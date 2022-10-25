@@ -1,12 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
+
+import { AppProvider } from './context/AppContext';
+
+import Header from './components/Header';
+import Budget from './components/Budget';
+import ExpenseList from './components/ExpenseList';
+import AddExpense from './components/AddExpense';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AppProvider>
+      <ScrollView>
+        <Header />
+        <View style={styles.container}>
+          <Budget />
+          <ExpenseList />
+          <AddExpense />
+          <StatusBar style="auto" />
+        </View>
+        <View style={{height: 50}}></View>
+      </ScrollView>
+    </AppProvider>
   );
 }
 
@@ -14,7 +29,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
   },
 });
