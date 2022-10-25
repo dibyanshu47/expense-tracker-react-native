@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
@@ -19,7 +20,7 @@ export default function App() {
           <AddExpense />
           <StatusBar style="auto" />
         </View>
-        <View style={{height: 50}}></View>
+        <View style={{ height: 50 }}></View>
       </ScrollView>
     </AppProvider>
   );

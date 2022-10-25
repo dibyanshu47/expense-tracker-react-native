@@ -1,5 +1,6 @@
-import { createContext, useReducer } from 'react';
-import { ADD_EXPENSE, DELETE_EXPENSE } from '../constants/actionTypes';
+import { createContext, useEffect, useReducer } from 'react';
+import { ADD_EXPENSE, DELETE_EXPENSE, INITIAL_STATE, UPDATE_BUDGET } from '../constants/actionTypes';
+import { setItem } from '../storage/storage';
 
 const AppReducer = (state, action) => {
     switch (action.type) {
@@ -13,20 +14,21 @@ const AppReducer = (state, action) => {
                 ...state,
                 expenses: state.expenses.filter((expense) => expense.id !== action.payload),
             };
+        case INITIAL_STATE:
+            return action.payload;
+        case UPDATE_BUDGET:
+            return {
+                ...state,
+                budget: action.payload,
+            };
         default:
             return state;
     };
 };
 
 const initialState = {
-    budget: 2000,
-    expenses: [
-        { id: 1, name: 'Shopping', cost: 50 },
-        { id: 2, name: 'Holiday', cost: 300 },
-        { id: 3, name: 'Transportation', cost: 70 },
-        { id: 4, name: 'Fuel', cost: 40 },
-        { id: 5, name: 'Child Care', cost: 500 },
-    ],
+    budget: 0,
+    expenses: [],
 }
 
 export const AppContext = createContext();
@@ -36,6 +38,9 @@ export const AppProvider = ({ children }) => {
     // state -> initial state
     // dispatch -> used to update the state
     const [state, dispatch] = useReducer(AppReducer, initialState);
+    useEffect(() => {
+        setItem(state);
+    }, [state])
 
     return (
         <AppContext.Provider value={{

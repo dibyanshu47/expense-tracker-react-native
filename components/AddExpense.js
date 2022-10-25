@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { ADD_EXPENSE } from '../constants/actionTypes';
-
 import { AppContext } from '../context/AppContext';
 
 export default function AddExpense() {
-    const { dispatch } = useContext(AppContext);
+    const { budget, expenses, dispatch } = useContext(AppContext);
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
